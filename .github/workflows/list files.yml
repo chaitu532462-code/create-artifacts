@@ -11,4 +11,4 @@ jobs:
         run: pip intall python
 
       - name: check pyhton
-        run: python --version || python -v  
+        run: python --version
