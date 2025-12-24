@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: list files
-        run: pip intall python
+        run: pip install python
 
       - name: check pyhton
         run: python --version
