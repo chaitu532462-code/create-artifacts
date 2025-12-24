@@ -4,7 +4,7 @@ from azure.ai.inference.models import SystemMessage, UserMessage
 from azure.core.credentials import AzureKeyCredential
 
 endpoint = "https://models.github.ai/inference"
-model = "openai/gpt-5"
+model = "openai/gpt-4.1"
 token = os.environ["AZURE_INFERENCE_TOKEN"]
 
 client = ChatCompletionsClient(
@@ -17,6 +17,8 @@ response = client.complete(
         SystemMessage("You are a helpful assistant."),
         UserMessage("What is the capital of France?"),
     ],
+    temperature=1.0,
+    top_p=1.0,
     model=model
 )
 
