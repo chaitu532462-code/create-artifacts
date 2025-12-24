@@ -8,4 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: list files
-        run: ls -la
+        run: pip intsall python
+
+      - name: check pyhton
+        run: python --version  
