@@ -20,27 +20,26 @@ jobs:
       - name: Check Python
         run: python --version
 
-      - name: List repository files
+      - name: Install dependencies
         run: |
-          echo "Repository files (top-level):"
-          ls -la
-          echo
-          echo "Repository files (recursive) -> files-list.txt"
-          ls -R > files-list.txt
-          echo "files-list.txt contents:"
-          cat files-list.txt
+          python -m pip install --upgrade pip
+          python -m pip install azure-ai-inference
 
-      - name: Run prime number code (if present)
+      - name: Run inference script
+        env:
+          AZURE_INFERENCE_TOKEN: ${{ secrets.AZURE_INFERENCE_TOKEN }}
         run: |
-          if [ -f primenumber.py ]; then
-            echo "Running primenumber.py"
-            python primenumber.py
-          else
-            echo "primenumber.py not found — skipping."
+          # Fail if the secret is not provided
+          if [ -z "${AZURE_INFERENCE_TOKEN}" ]; then
+            echo "ERROR: AZURE_INFERENCE_TOKEN is not set. Set the secret in the repository settings."
+            exit 1
           fi
 
-      - name: Upload files list artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: files-list
-          path: files-list.txt
+          # Replace `inference.py` with your actual script filename if different
+          if [ -f run_llm.py ]; then
+            echo "Running run_llm.py"
+            python run_llm.py
+          else
+            echo "ERROR: run_llm.py not found. Add the script or update the workflow to the correct filename."
+            exit 1
+          fi
