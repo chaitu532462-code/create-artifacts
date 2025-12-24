@@ -1,16 +1,24 @@
-name: Listfiles
+name: list-files
 
-on: [push, workflow_dispatch]
+on:
+  push:
+  workflow_dispatch:
 
 jobs:
   files_data:
-    name: list files
+    name: List files
     runs-on: ubuntu-latest
     steps:
-       - name: Set up Python 3.11
-         uses: actions/setup-python@v5
-         with:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
           python-version: '3.11'
 
-       - name: check pyhton
-         run: python --version
+      - name: Check Python
+        run: python --version
+
+      - name: Run prime number code
+        run: python primenumber.py
