@@ -11,4 +11,4 @@ jobs:
         run: pip intsall python
 
       - name: check pyhton
-        run: python --version  
+        run: python --version || python -v  
