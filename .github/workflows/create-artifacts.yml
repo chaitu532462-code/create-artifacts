@@ -1,7 +1,6 @@
 name: list-files
 
 on:
-  push:
   workflow_dispatch:
 
 jobs:

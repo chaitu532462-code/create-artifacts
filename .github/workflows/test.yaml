@@ -1,0 +1,35 @@
+name: Example Conditional Workflow
+
+on:
+  workflow_dispatch:
+    inputs:
+      enable_unit_tests:
+        description: 'Enable Unit Tests'
+        default: true
+        required: true
+        type: boolean
+      enable_sonar:
+        description: 'Enable Sonar'
+        default: true
+        required: true
+        type: boolean
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Echo chosen options
+        run: |
+          echo "Unit Tests Enabled: ${{ github.event.inputs.enable_unit_tests }}"
+          echo "Sonar Enabled: ${{ github.event.inputs.enable_sonar }}"
+
+      - name: Run Unit Tests
+        if: ${{ github.event.inputs.enable_unit_tests == 'true' }}
+        run: echo "Running unit tests..."
+
+      - name: Run Sonar Analysis
+        if: ${{ github.event.inputs.enable_sonar == 'true' }}
+        run: echo "Running Sonar analysis..."
